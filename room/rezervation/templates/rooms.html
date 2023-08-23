@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+{% extends 'base.html' %}
+
+{% block title %}List of rooms{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<h2>{{ message }}</h2>
+{% endfor %}
+{% endif %}
+
+{% load static %}
+
+<h1>List of Rooms</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div>
+        <button type="submit" name="sort_option" value="1">sort by room capacity</button>
+        <button type="submit" name="sort_option" value="2">sort descending by room capacity</button>
+    </div>
+
+    <ul>
+        {% for room in rooms %}
+        <li>
+            name: {{ room.name }},
+            capacity: {{ room.capacity }},
+            projector: {{ room.projector}},
+            availability: {{ room.availability }},
+             {% for reservation in room.room_reservation_set.all %}
+              reservation: {{ reservation.date }},
+            {% endfor %}
+            <a class="tooltip" data-text="redirect to delete a this room" href="/del_room/{{ room.pk }}">Delete room</a>
+            <a class="tooltip" data-text="redirect to edit a this room" href="/edit_room/{{ room.id }}">Edit room</a>
+            <a class="tooltip" data-text="redirect to reserve a this room" href="/reserv/{{ room.id }}">Reserve room</a>
+            <a class="tooltip" data-text="redirect to detailed view a this room" href="/detailed_view/{{ room.id }}">Detailed room</a>
+        </li>
+        {% endfor %}
+    </ul>
+</form>
+
+<script src="{% static 'app.js' %}"></script>
+
+{% endblock %}
+</body>
+</html>

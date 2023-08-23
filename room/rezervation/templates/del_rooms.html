@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deleting a room</title>
+</head>
+<body>
+{% extends 'base.html' %}
+<!--{% block title %}Deleting a room{% endblock %}-->
+{% block content %}
+
+{% load static %}
+
+    <h1>Deleting a room</h1>
+    <form method="GET" action="/del_rooms/{{ room.pk }}">
+
+    <ul>
+        {% for room in Rooms %}
+        <li>
+            name: {{ room.name }},
+            capacity: {{ room.capacity }},
+            projector: {{ room.projector}},
+            availability: {{ room.availability }},
+            <a class="tooltip" data-text="redirect to edit a this room" href="/edit_room/{{ room.id }}">Edit room</a>
+            <a class="tooltip" data-text="redirect to reserve a this room" href="/reserv/{{ room.id }}">Reserve room</a>
+            <a class="tooltip" data-text="redirect to detailed view a this room" href="/detailed_view/{{ room.id }}">Detailed room</a>
+        </li>
+        {% endfor %}
+    </ul>
+        <br>
+        <button type="submit">Delete</button>
+    </form>
+
+<script src="{% static 'app.js' %}"></script>
+{% endblock %}
+</body>
+</html>

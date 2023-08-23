@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modify a room</title>
+</head>
+<body>
+
+{% extends 'base.html' %}
+<!--{% block title %}Modify a room{% endblock %}-->
+{% block content %}
+
+    <h1>Room modification</h1>
+    <form method="POST"  action="/edit_room/{{ room.id }}">
+        {% csrf_token %}
+        <label>
+            Name:
+            <input type="text" name="name" value="{{ room.name }}">
+        </label>
+        <br>
+        <label>
+            capacity:
+            <input type="number" name="capacity" value="{{ room.capacity }}" >
+        </label>
+        <br>
+          <label>
+                <input type="checkbox" name="projector" value="True" checked> There is a projector
+          </label>
+        <br>
+            <label>
+                <input type="checkbox" name="availability" value="True" checked> Is available
+          </label>
+        <br>
+        <button type="submit">Modify</button>
+    </form>
+{% endblock %}
+</body>
+</html>
+

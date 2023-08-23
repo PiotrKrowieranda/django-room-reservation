@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search room</title>
+</head>
+<body>
+
+
+
+{% extends 'base.html' %}
+
+{% block title %}Search room{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+    <h1>Search Room</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <label>name:</label>
+            <input type="text" name="name">
+        </div>
+        <div>
+            <label>projector</label>
+            <input type="checkbox" name="projector" value="True"> Yes
+            <input type="checkbox" name="projector" value="False"> No
+        </div>
+        <div>
+            <label>capacity From:</label>
+            <input type="number" name="capacity_from">
+        </div>
+        <div>
+            <label>capacity To:</label>
+            <input type="number" name="capacity_to">
+        </div>
+        <div>
+            <label>Availability From:</label>
+            <input type="date" name="availability_from">
+        </div>
+        <div>
+            <label>Availability To:</label>
+            <input type="date" name="availability_to">
+        </div>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if messages %}
+    {% for message in messages %}
+    <h4>{{ message }}</h4>
+    {% endfor %}
+    {% endif %}
+
+    {% if rooms %}
+   <ul>
+    {% for room in rooms %}
+    <li>
+        name: {{ room.name }},
+        capacity: {{ room.capacity }},
+        projector: {{ room.projector}},
+        availability: {{ room.availability }},
+        <p>
+        booked date:
+        {% for reservation in room.room_reservation_set.all %}
+        {{ reservation.date }},
+        {% endfor %}
+        </p>
+            <a class="tooltip" data-text="redirect to delete a this room" href="/del_room/{{ room.pk }}">Delete room</a>
+            <a class="tooltip" data-text="redirect to edit a this room" href="/edit_room/{{ room.id }}">Edit room</a>
+            <a class="tooltip" data-text="redirect to reserve a this room" href="/reserv/{{ room.id }}">Reserve room</a>
+            <a class="tooltip" data-text="redirect to detailed view a this room" href="/detailed_view/{{ room.id }}">Detailed room</a>
+    </li>
+    {% endfor %}
+   </ul>
+{% endif %}
+
+<script src="{% static 'app.js' %}"></script>
+
+{% endblock %}
+</body>
+</html>

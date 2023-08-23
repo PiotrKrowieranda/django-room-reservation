@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detailed</title>
+</head>
+<body>
+
+{% extends 'base.html' %}
+<!--{% block title %}Modify a room{% endblock %}-->
+{% block content %}
+
+{% load static %}
+
+    <h1>Detailed</h1>
+
+ <form action="" method="POST">
+    {% csrf_token %}
+     <ul>
+        <li>
+            name: {{ room.name }},
+            capacity: {{ room.capacity }},
+            projector: {{ room.projector}},
+            availability: {{ room.availability }},
+
+            <a class="tooltip" data-text="redirect to delete a this room" href="/del_room/{{ room.pk }}">Delete room</a>
+            <a class="tooltip" data-text="redirect to edit a this room" href="/edit_room/{{ room.id }}">Edit room</a>
+            <a class="tooltip" data-text="redirect to reserve a this room" href="/reserv/{{ room.id }}">Reserve room</a>
+        </li>
+     </ul>
+     <br>
+     <div>
+        <button type="submit" name="sort_option" value="1">sort by room reservation</button>
+        <button type="submit" name="sort_option" value="2">sort descending by room reservation</button>
+     </div>
+    <ul>
+        {% for r in reservation %}
+        <li>
+            date: {{ r.date }}
+            comment: {{ r.comment }}
+        </li>
+        {% endfor %}
+    </ul>
+
+ </form>
+
+<script src="{% static 'app.js' %}"></script>
+
+{% endblock %}
+</body>
+</html>
+
