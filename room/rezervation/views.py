@@ -12,6 +12,7 @@ from rezervation.models import Rooms, Room_reservation
 from django.contrib import messages
 from datetime import date
 
+
 def new_room(request):
     if request.method == "POST":
         # Downloading data from the form
